@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
 	const creds = plainAuth.split(':');
 	const username = creds[0];
     const password = creds[1];
-    if (username !== CONFIG.AUTH.USERNAME || password !== CONFIG.AUTH.PASSWORD) {
+    if (username !== CONFIG.AUTH_USERNAME || password !== CONFIG.AUTH_PASSWORD) {
         return res.status(400).send("bad auth");
     }
     next();
