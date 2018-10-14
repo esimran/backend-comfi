@@ -18,7 +18,7 @@ function format(transactions) {
         }
         const rawAmount = transaction.amount;
         if(rawAmount > 0) { goingOut = goingOut + rawAmount; }
-        else { comingIn = comingIn + rawAmount; }
+        else { comingIn = comingIn - rawAmount; }
         formattedTransactions.push({
             name: transaction.name,
             amount: Number(rawAmount).toFixed(2),
@@ -26,14 +26,23 @@ function format(transactions) {
         }); 
     }
     const pieGraph = [];
+    const other = {
+        category: "Other",
+        percent: 0,
+    };
     for (const category of Object.keys(categories)) {
         const percent = categories[category]/totalCategoryCount;
-        pieGraph.push({
-            category: category,
-            percent: percent,
-            amount: percent*goingOut,
-        });
+        if (percent < .05) { other.percent = other.percent + percent; } 
+        else {
+            pieGraph.push({
+                category: category,
+                percent: percent,
+                amount: percent*goingOut,
+            });
+        }
     }
+    other.amount = other.percent*goingOut;
+    pieGraph.push(other);
     return {
         saving: comingIn-goingOut,
         pieGraph: pieGraph,

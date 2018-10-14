@@ -45,6 +45,10 @@ module.exports = async (req, res) => {
     const categoryArray =  Array.from(categorySet);
     const categoryPercents = {};
     const pieGraph = [];
+    const other = {
+        percent: 0,
+        category: "Other",
+    };
     for (const category of categoryArray) {
         const individualPercents = [];
         var sum = 0;
@@ -61,14 +65,17 @@ module.exports = async (req, res) => {
         categoryPercents[category] = individualPercents.sort((a, b) => {
             return b.percent - a.percent;
         });
-        pieGraph.push({
-            category: category,
-            percent: sum/individualPercents.length,
-        });
+        const percent = sum/individualPercents.length;
+        if (percent < .05) { other.percent = other.percent + percent; } 
+        else {
+            pieGraph.push({
+                category: category,
+                percent: percent,
+            });
+        }
     }
-    return res.status(200).json({
-        categoryPercents,
-        categories: categoryArray,
-        pie_graph: pieGraph,
-    });  
+    pieGraph.push(other);
+    categoryPercents.categories = categoryArray;
+    categoryPercents.pie_graph = pieGraph;
+    return res.status(200).json(categoryPercents);  
 };
