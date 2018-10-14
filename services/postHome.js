@@ -21,7 +21,7 @@ function format(transactions) {
         else { comingIn = comingIn - rawAmount; }
         formattedTransactions.push({
             name: transaction.name,
-            amount: Number(rawAmount).toFixed(2),
+            amount: Number(-1*rawAmount).toFixed(2),
             date: transaction.date,
         }); 
     }

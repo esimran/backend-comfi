@@ -75,7 +75,9 @@ module.exports = async (req, res) => {
         }
     }
     pieGraph.push(other);
-    categoryPercents.categories = categoryArray;
-    categoryPercents.pie_graph = pieGraph;
-    return res.status(200).json(categoryPercents);  
+    return res.status(200).json({
+        categoryPercents,
+        categories: categoryArray,
+        pie_graph: pieGraph,
+    });  
 };
