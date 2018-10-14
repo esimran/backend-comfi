@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/esimran/backend-comfi/issues"
   },
-  "homepage": "https://github.com/esimran/backend-comfi#readme"
+  "homepage": "https://github.com/esimran/backend-comfi#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
