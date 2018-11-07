@@ -71,15 +71,15 @@ module.exports = async (req, res) => {
     const transactionsResponse = await getTransactions(plaidInfo);
     const transactions = transactionsResponse.transactions;
     const formattedData = format(transactions);
-    const predictedSaving = .018;
+    const predictedSaving = .018*100;
     res.status(200).json({
         monthly_saving: Number(formattedData.saving/MONTHS).toFixed(2),
         account_balance: Number(transactionsResponse.accounts[0].balances.available).toFixed(2),
         pie_graph: formattedData.pieGraph,
         transactions: formattedData.transactions,
         predictions: { // Predicted using the model, values hard coded here
-            saving: predictedSaving,
-            spending: 1-predictedSaving,
+            saving: "%" + predictedSaving,
+            spending: "%" + (100-predictedSaving),
         },
     });  
 };
