@@ -72,7 +72,7 @@ module.exports = async (req, res) => {
     const transactionsResponse = await getTransactions(plaidInfo);
     const transactions = transactionsResponse.transactions;
     const formattedData = format(transactions);
-    const predictedSaving = .018*100; // Predicted using the model, values hard coded here
+    const predictedSaving = Number(.018*100).toFixed(1); // Predicted using the model, values hard coded here
     const predictedSpending = Number(100-predictedSaving).toFixed(1);
     res.status(200).json({
         monthly_saving: Number(formattedData.saving/MONTHS).toFixed(2),
