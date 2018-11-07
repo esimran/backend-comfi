@@ -19,7 +19,10 @@ app.get("/", function (req, res) {
 });
 app.post("/home", services.postHome);
 app.post("/group", services.postGroup);
+app.post("/community", services.postCommunity);
 
 app.listen(port, function () {
  console.log("Starting!");
 });
+
+// services.getDataAnalytics().then().catch();
