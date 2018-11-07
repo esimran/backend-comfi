@@ -80,7 +80,7 @@ module.exports = async (req, res) => {
         transactions: formattedData.transactions,
         predictions: { // Predicted using the model, values hard coded here
             saving: predictedSaving + "%",
-            spending: (100-predictedSaving) + "%",
+            spending: Number(100-predictedSaving).toFixed(1) + "%",
         },
     });  
 };
