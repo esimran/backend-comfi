@@ -11,8 +11,9 @@ function format(transactions) {
     var goingOut = 0;
     var totalCategoryCount = 0;
     for(const transaction of transactions) {
-        if (!categories[0]) { categories[0] = 1; }
-        else { categories[0] = categories[0] + 1; }
+        const category = transaction.category[0];
+        if (!categories[category]) { categories[category] = 1; }
+        else { categories[category] = categories[category] + 1; }
         totalCategoryCount = totalCategoryCount + 1;
         const rawAmount = transaction.amount;
         if(rawAmount > 0) { goingOut = goingOut + rawAmount; }
