@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
             categories: currentUser.strengths.filter(x => myWeakSet.has(x)),
         });
     }
-    console.log({
+    return res.status(200).json({
         self_can_help: canHelp, 
         self_gets_help: getHelp,
         strengths: requestUser.strengths,
