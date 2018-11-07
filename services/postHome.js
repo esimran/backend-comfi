@@ -79,8 +79,8 @@ module.exports = async (req, res) => {
         pie_graph: formattedData.pieGraph,
         transactions: formattedData.transactions,
         predictions: { // Predicted using the model, values hard coded here
-            saving: "%" + predictedSaving,
-            spending: "%" + (100-predictedSaving),
+            saving: predictedSaving + "%",
+            spending: (100-predictedSaving) + "%",
         },
     });  
 };
