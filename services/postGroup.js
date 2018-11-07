@@ -32,14 +32,13 @@ module.exports = async (req, res) => {
         const transactionsResponse = await getTransactions(plaidInfo);
         const transactions = transactionsResponse.transactions;
         for (const transaction of transactions) {
-            for(const category of transaction.category) {
-                if (!categories[fbid]) { categories[fbid] = {}; }
-                if (!categories[fbid][category]) { categories[fbid][category] = 1}
-                else { categories[fbid][category] = categories[fbid][category] + 1; }
-                if(!individualCategoryCount[fbid]) { individualCategoryCount[fbid] = 1; }
-                else { individualCategoryCount[fbid] = individualCategoryCount[fbid] + 1; }
-                categorySet.add(category);
-            }
+            const category = transaction.category[0];
+            if (!categories[fbid]) { categories[fbid] = {}; }
+            if (!categories[fbid][category]) { categories[fbid][category] = 1}
+            else { categories[fbid][category] = categories[fbid][category] + 1; }
+            if(!individualCategoryCount[fbid]) { individualCategoryCount[fbid] = 1; }
+            else { individualCategoryCount[fbid] = individualCategoryCount[fbid] + 1; }
+            categorySet.add(category);
         }
     }
     const categoryArray =  Array.from(categorySet);

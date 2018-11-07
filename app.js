@@ -25,4 +25,4 @@ app.listen(port, function () {
  console.log("Starting!");
 });
 
-// services.getDataAnalytics().then().catch();
+services.getDataAnalytics().then().catch();

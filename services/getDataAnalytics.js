@@ -22,7 +22,6 @@ function format(transactions) {
             data[data.length-1].monthly_spending = data[data.length-1].monthly_spending + amount; 
         }
     }
-    console.log("in", -1*incomeSum, "out", outSum);
     const averageMonthly = incomeSum/data.length*-1;
     const scaled = data.map(month => {
         const scaledMS = month.monthly_spending/averageMonthly;
@@ -55,13 +54,13 @@ function getTransactions(plaidInfo) {
 }
 
 async function getDataAnalytics() {
-  const fbid = "2214830305459080";
+  const fbid = "1172074312944659";
   const plaidInfo = await db.ref("user/" + fbid).once('value')
       .then(snapshot => { return snapshot.val(); })
   const transactionsResponse = await getTransactions(plaidInfo);
   const transactions = transactionsResponse.transactions;
   const formattedData = format(transactions);
-  console.log(JSON.stringify(formattedData));
+//   console.log(JSON.stringify(formattedData));
   return formattedData;
 }
 

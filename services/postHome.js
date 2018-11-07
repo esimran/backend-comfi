@@ -11,11 +11,9 @@ function format(transactions) {
     var goingOut = 0;
     var totalCategoryCount = 0;
     for(const transaction of transactions) {
-        for(const category of transaction.category) {
-            if (!categories[category]) { categories[category] = 1; }
-            else { categories[category] = categories[category] + 1; }
-            totalCategoryCount = totalCategoryCount + 1;
-        }
+        if (!categories[0]) { categories[0] = 1; }
+        else { categories[0] = categories[0] + 1; }
+        totalCategoryCount = totalCategoryCount + 1;
         const rawAmount = transaction.amount;
         if(rawAmount > 0) { goingOut = goingOut + rawAmount; }
         else { comingIn = comingIn - rawAmount; }
@@ -73,10 +71,15 @@ module.exports = async (req, res) => {
     const transactionsResponse = await getTransactions(plaidInfo);
     const transactions = transactionsResponse.transactions;
     const formattedData = format(transactions);
+    const predictedSaving = .018;
     res.status(200).json({
         monthly_saving: Number(formattedData.saving/MONTHS).toFixed(2),
         account_balance: Number(transactionsResponse.accounts[0].balances.available).toFixed(2),
         pie_graph: formattedData.pieGraph,
         transactions: formattedData.transactions,
+        predictions: { // Predicted using the model, values hard coded here
+            saving: predictedSaving,
+            spending: 1-predictedSaving,
+        },
     });  
 };
